@@ -52,4 +52,21 @@ export const useAuth = create((set) => ({
       toast.error(error.response.data.message);
     }
   },
+  updateProfile: async (data) => {
+    console.log(data);
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.patch("/auth/update-profile", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      set({ userAuth: res.data.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      // toast.error(error.response.data.message || error.message);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  },
 }));

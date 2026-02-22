@@ -1,11 +1,10 @@
 import { MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
-import SignupForm from "../components/SignupForm";
 import LoginForm from "../components/LoginForm";
 export default function Login() {
   return (
-    <div className="grid lg:grid-cols-2">
+    <div className="min-h-screen grid lg:grid-cols-2">
       <div className="flex flex-col items-center justify-center p-6 sm:p-8 ">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center mb-4">
@@ -24,17 +23,14 @@ export default function Login() {
 
           <div className="text-center">
             <p className="text-base-content/60">
-              Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
-                Sign in
+              Don&apos;t have an account?{" "}
+              <Link to="/signup" className="font-semibold link-primary">
+                Create account
               </Link>
             </p>
           </div>
         </div>
       </div>
-
-      {/* right side */}
-
       <AuthImagePattern
         title="Join our community"
         subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
