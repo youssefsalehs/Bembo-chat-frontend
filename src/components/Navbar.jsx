@@ -20,7 +20,7 @@ const Navbar = () => {
               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-primary" />
               </div>
-              <h1 className="text-lg font-bold">Bembo</h1>
+              <h1 className="text-lg font-bold text-primary">Bembo</h1>
             </Link>
           </div>
 
@@ -28,7 +28,7 @@ const Navbar = () => {
             <Link
               to={"/settings"}
               className={`
-              btn btn-sm gap-2 transition-colors
+              btn btn-sm gap-2 btn-primary transition-colors
               
               `}
             >
@@ -38,12 +38,18 @@ const Navbar = () => {
 
             {userAuth && (
               <>
-                <Link to={"/profile"} className={`btn btn-sm gap-2`}>
+                <Link
+                  to={"/profile"}
+                  className={`btn btn-sm btn-primary gap-2`}
+                >
                   <User className="size-5" />
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
 
-                <button className="btn btn-sm gap-2" onClick={logout}>
+                <button
+                  className="btn btn-sm btn-primary gap-2"
+                  onClick={logout}
+                >
                   <LogOut className="size-5" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>

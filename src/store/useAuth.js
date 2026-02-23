@@ -7,6 +7,7 @@ export const useAuth = create((set) => ({
   isLoging: false,
   isUpdatingProfile: false,
   isCheckingAuth: true,
+  onlineUsers: [],
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
@@ -64,7 +65,7 @@ export const useAuth = create((set) => ({
       set({ userAuth: res.data.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      // toast.error(error.response.data.message || error.message);
+      toast.error(error.response.data.message || error.message);
     } finally {
       set({ isUpdatingProfile: false });
     }
