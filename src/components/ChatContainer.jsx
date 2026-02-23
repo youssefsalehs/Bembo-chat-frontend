@@ -1,17 +1,18 @@
 import { useChat } from "../store/useChat";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./MessageSkeleton";
 import { useAuth } from "../store/useAuth";
 import ImagePreview from "./ImagePreview";
+import { PreviewContext } from "../PreviewProvider";
 
 const ChatContainer = ({ setOpenMedia }) => {
   const { messages, getMsgs, isMsgsLoading, selectedUser } = useChat();
   const { userAuth } = useAuth();
-  const [previewImages, setPreviewImages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { setPreviewImages, setCurrentIndex } = useContext(PreviewContext);
+
   const messageEndRef = useRef(null);
 
   useEffect(() => {
@@ -42,14 +43,6 @@ const ChatContainer = ({ setOpenMedia }) => {
   return (
     <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden">
       <ChatHeader setOpenMedia={setOpenMedia} />
-      {previewImages.length > 0 && (
-        <ImagePreview
-          images={previewImages}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-          setPreviewImages={setPreviewImages}
-        />
-      )}
       <div
         className="flex-1 overflow-y-auto p-4 space-y-4"
         style={{ backgroundColor: userAuth?.theme }}

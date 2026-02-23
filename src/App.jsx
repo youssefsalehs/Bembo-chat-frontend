@@ -6,14 +6,19 @@ import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import { useAuth } from "./store/useAuth";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Loader } from "lucide-react";
 import ProtectRoute from "./components/ProtectRoute";
 import { Toaster } from "react-hot-toast";
 import { useTheme } from "./store/useTheme";
+import { PreviewContext } from "./PreviewProvider";
+import ImagePreview from "./components/ImagePreview";
 export default function App() {
   const { userAuth, checkAuth, isCheckingAuth } = useAuth();
   const { theme } = useTheme();
+  const { previewImages, setPreviewImages, currentIndex, setCurrentIndex } =
+    useContext(PreviewContext);
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -30,6 +35,14 @@ export default function App() {
   return (
     <div data-theme={theme}>
       <Navbar />
+      {previewImages.length > 0 && (
+        <ImagePreview
+          images={previewImages}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          setPreviewImages={setPreviewImages}
+        />
+      )}
       <Toaster />
       <Routes>
         <Route

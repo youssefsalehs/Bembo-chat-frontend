@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useChat } from "../store/useChat";
 import { Images, Quote, X } from "lucide-react";
+import { PreviewContext } from "../PreviewProvider.jsx";
 
 export default function Media({ setOpenMedia }) {
   const { selectedUser, messages } = useChat();
   const [visibleCount, setVisibleCount] = useState(5);
-  console.log(selectedUser?.coverPic);
+  const { setPreviewImages, setCurrentIndex } = useContext(PreviewContext);
+
   const loadMore = () => {
     setVisibleCount((prev) => prev + 5);
   };
@@ -13,7 +15,10 @@ export default function Media({ setOpenMedia }) {
     .filter((m) => m.images.length > 0)
     .flatMap((m) => m.images);
   const visibleImages = images.slice(0, visibleCount);
-
+  const handlePreview = (img, allImages = [img]) => {
+    setPreviewImages(allImages);
+    setCurrentIndex(allImages.indexOf(img));
+  };
   return (
     <div className="w-full md:w-96 border-l border-base-300">
       <div className=" rounded-xl  space-y-2">
@@ -34,13 +39,22 @@ export default function Media({ setOpenMedia }) {
                 "https://res.cloudinary.com/dlnhmifmn/image/upload/v1771801386/pexels-joyston-judah-331625-933054_zhhyk7.jpg"
               }
               alt="cover"
-              className="rounded-md object-cover border-4 w-full h-32"
+              className="rounded-md object-cover border-4 w-full h-32 cursor-pointer"
+              onClick={() =>
+                handlePreview([
+                  selectedUser?.coverPic ||
+                    "https://res.cloudinary.com/dlnhmifmn/image/upload/v1771801386/pexels-joyston-judah-331625-933054_zhhyk7.jpg",
+                ])
+              }
             />
 
             <img
               src={selectedUser?.profilePic || "/default.jpg"}
               alt="avatar"
-              className="size-28 absolute bottom-[-30px] left-1/2 -translate-x-1/2  rounded-full object-cover border-4 border-green-600"
+              className="size-28 absolute bottom-[-30px] left-1/2 -translate-x-1/2  rounded-full object-cover border-4 border-green-600 cursor-pointer"
+              onClick={() =>
+                handlePreview([selectedUser?.profilePic || "/default.jpg"])
+              }
             />
           </div>
         </div>
@@ -68,7 +82,8 @@ export default function Media({ setOpenMedia }) {
                       key={i}
                       src={img}
                       alt={`img-${i}`}
-                      className="object-cover  rounded-md"
+                      className="object-cover  rounded-md cursor-pointer"
+                      onClick={() => handlePreview([img])}
                     />
                   ))
                 ) : (

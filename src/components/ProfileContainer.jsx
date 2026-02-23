@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../store/useAuth";
 import { Camera, Circle, Mail, Pen, Settings2, User } from "lucide-react";
+import { PreviewContext } from "../PreviewProvider";
 export default function ProfileContainer() {
   const { userAuth, isUpdatingProfile, updateProfile } = useAuth();
 
   const [profilePic, setProfilePic] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
-
+  const { setPreviewImages, setCurrentIndex } = useContext(PreviewContext);
   const [coverPic, setCoverPic] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);
 
@@ -37,7 +38,10 @@ export default function ProfileContainer() {
     setCoverPic(file);
     setSelectedCover(URL.createObjectURL(file));
   };
-
+  const handlePreview = (img, allImages = [img]) => {
+    setPreviewImages(allImages);
+    setCurrentIndex(allImages.indexOf(img));
+  };
   const handleUpdate = async () => {
     try {
       const formData = new FormData();
@@ -81,14 +85,21 @@ export default function ProfileContainer() {
             "https://res.cloudinary.com/dlnhmifmn/image/upload/v1771801386/pexels-joyston-judah-331625-933054_zhhyk7.jpg"
           }
           alt="cover"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover cursor-pointer"
+          onClick={() =>
+            handlePreview([
+              selectedCover ||
+                "https://res.cloudinary.com/dlnhmifmn/image/upload/v1771801386/pexels-joyston-judah-331625-933054_zhhyk7.jpg",
+            ])
+          }
         />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
           <div className="relative">
             <img
               src={selectedImg || "/default.jpg"}
               alt="avatar"
-              className="size-32 rounded-full object-cover border-4"
+              className="size-32 rounded-full object-cover border-4 cursor-pointer"
+              onClick={() => handlePreview([selectedImg || "/default.jpg"])}
             />
             {editMode && (
               <label
