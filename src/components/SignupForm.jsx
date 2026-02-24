@@ -28,7 +28,6 @@ export default function SignupForm() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     const success = validateForm();
 
     if (success === true) signup(formData);

@@ -12,9 +12,7 @@ export const useAuth = create((set, get) => ({
   socket: null,
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/check", {
-        withCredentials: true,
-      });
+      const res = await axiosInstance.get("/auth/check");
       set({ userAuth: res.data });
       get().connectSocket();
     } catch (error) {
@@ -44,8 +42,6 @@ export const useAuth = create((set, get) => ({
       toast.success("Logged in successfully");
       get().connectSocket();
     } catch (error) {
-      console.error("error in check auth", error);
-      console.log(error.response?.data);
       toast.error(error.response.data.message);
     } finally {
       set({ isLoging: false });
@@ -85,6 +81,7 @@ export const useAuth = create((set, get) => ({
         query: {
           userId: userAuth?._id,
         },
+        transports: ["websocket", "polling"],
       });
       socket.connect();
       set({ socket });
