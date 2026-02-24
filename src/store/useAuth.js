@@ -42,6 +42,8 @@ export const useAuth = create((set, get) => ({
       toast.success("Logged in successfully");
       get().connectSocket();
     } catch (error) {
+      console.error("error in check auth", error);
+      console.log(error.response?.data);
       toast.error(error.response.data.message);
     } finally {
       set({ isLoging: false });
