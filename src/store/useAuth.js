@@ -12,7 +12,9 @@ export const useAuth = create((set, get) => ({
   socket: null,
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/check");
+      const res = await axiosInstance.get("/auth/check", {
+        withCredentials: true,
+      });
       set({ userAuth: res.data });
       get().connectSocket();
     } catch (error) {
