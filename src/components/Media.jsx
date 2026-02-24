@@ -1,10 +1,13 @@
 import React, { useContext, useState } from "react";
 import { useChat } from "../store/useChat";
 import { Images, Quote, X } from "lucide-react";
-import { PreviewContext } from "../PreviewProvider.jsx";
+import { PreviewContext } from "../context/PreviewProvider.jsx";
+import { useAuth } from "../store/useAuth.js";
 
 export default function Media({ setOpenMedia }) {
   const { selectedUser, messages } = useChat();
+  const { onlineUsers } = useAuth();
+  const isOnline = onlineUsers.includes(selectedUser?._id);
   const [visibleCount, setVisibleCount] = useState(5);
   const { setPreviewImages, setCurrentIndex } = useContext(PreviewContext);
 
@@ -51,7 +54,7 @@ export default function Media({ setOpenMedia }) {
             <img
               src={selectedUser?.profilePic || "/default.jpg"}
               alt="avatar"
-              className="size-28 absolute bottom-[-30px] left-1/2 -translate-x-1/2  rounded-full object-cover border-4 border-green-600 cursor-pointer"
+              className={`size-28 absolute bottom-[-30px] left-1/2 -translate-x-1/2  rounded-full object-cover border-2 ${isOnline ? "border-green-600 " : "border-orange-600 "}cursor-pointer`}
               onClick={() =>
                 handlePreview([selectedUser?.profilePic || "/default.jpg"])
               }
@@ -83,7 +86,7 @@ export default function Media({ setOpenMedia }) {
                       src={img}
                       alt={`img-${i}`}
                       className="object-cover  rounded-md cursor-pointer"
-                      onClick={() => handlePreview([img])}
+                      onClick={() => handlePreview(img, visibleImages)}
                     />
                   ))
                 ) : (

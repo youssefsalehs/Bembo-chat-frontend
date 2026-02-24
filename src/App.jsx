@@ -11,7 +11,7 @@ import { Loader } from "lucide-react";
 import ProtectRoute from "./components/ProtectRoute";
 import { Toaster } from "react-hot-toast";
 import { useTheme } from "./store/useTheme";
-import { PreviewContext } from "./PreviewProvider";
+import { PreviewContext } from "./context/PreviewProvider";
 import ImagePreview from "./components/ImagePreview";
 export default function App() {
   const { userAuth, checkAuth, isCheckingAuth } = useAuth();
@@ -43,7 +43,24 @@ export default function App() {
           setPreviewImages={setPreviewImages}
         />
       )}
-      <Toaster />
+      <div data-theme={theme}>
+        <Toaster
+          toastOptions={{
+            success: {
+              style: {
+                background: "green",
+                color: "white",
+              },
+            },
+            error: {
+              style: {
+                background: "red",
+                color: "white",
+              },
+            },
+          }}
+        />
+      </div>
       <Routes>
         <Route
           path="/"

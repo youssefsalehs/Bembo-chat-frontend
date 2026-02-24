@@ -27,7 +27,6 @@ export default function PreviewMsgs() {
       <div className="p-4 bg-base-200">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-lg font-semibold text-center flex-1">Preview</h3>
-          {/* Color Picker */}
           <input
             type="color"
             value={chatBg}

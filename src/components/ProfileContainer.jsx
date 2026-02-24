@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../store/useAuth";
 import { Camera, Circle, Mail, Pen, Settings2, User } from "lucide-react";
-import { PreviewContext } from "../PreviewProvider";
+import { PreviewContext } from "../context/PreviewProvider";
 export default function ProfileContainer() {
   const { userAuth, isUpdatingProfile, updateProfile } = useAuth();
 
@@ -73,7 +73,7 @@ export default function ProfileContainer() {
           Member since:
           <span>
             {" "}
-            {new Date(userAuth?.createdAt).toLocaleDateString() || "2020-12-3"}
+            {new Date(userAuth?.createdAt).toLocaleDateString() || "2020/12/03"}
           </span>
         </p>
       </div>
@@ -98,7 +98,7 @@ export default function ProfileContainer() {
             <img
               src={selectedImg || "/default.jpg"}
               alt="avatar"
-              className="size-32 rounded-full object-cover border-4 cursor-pointer"
+              className="size-32 rounded-full object-cover border-2 border-green-600 cursor-pointer"
               onClick={() => handlePreview([selectedImg || "/default.jpg"])}
             />
             {editMode && (

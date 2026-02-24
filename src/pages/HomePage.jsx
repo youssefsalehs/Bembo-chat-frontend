@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useChat } from "../store/useChat";
 import NoChat from "../components/NoChat";
 import Sidebar from "../components/Sidebar";
 import ChatContainer from "../components/ChatContainer";
-import { Images, Quote, X } from "lucide-react";
 import Media from "../components/Media";
 
 export default function HomePage() {
   const { selectedUser } = useChat();
   const [openMedia, setOpenMedia] = useState(false);
-  console.log(openMedia);
   return (
     <div className="min-h-screen bg-base-200 ">
       <div className="flex items-center justify-center pt-16  h-full">

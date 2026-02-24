@@ -11,11 +11,11 @@ const MessageInput = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [openEmoji, setOpenEmoji] = useState(false);
   const [attachMenu, setAttachMenu] = useState(false);
-  const { userAuth } = useAuth();
+  const { userAuth, socket } = useAuth();
   const fileInputRef = useRef(null);
   const emojiRef = useRef(null);
 
-  const { sendMsg, isSendingMsgs } = useChat();
+  const { sendMsg, isSendingMsgs, selectedUser } = useChat();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -71,6 +71,11 @@ const MessageInput = () => {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+  useEffect(() => {
+    if (text.length > 0)
+      socket.emit("typing", { receiverId: selectedUser._id });
+    return () => socket.emit("stopTyping", { receiverId: selectedUser._id });
+  }, [socket, selectedUser._id, text]);
 
   return (
     <div

@@ -1,15 +1,21 @@
 import { useChat } from "../store/useChat";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./MessageSkeleton";
 import { useAuth } from "../store/useAuth";
-import ImagePreview from "./ImagePreview";
-import { PreviewContext } from "../PreviewProvider";
+import { PreviewContext } from "../context/PreviewProvider";
 
 const ChatContainer = ({ setOpenMedia }) => {
-  const { messages, getMsgs, isMsgsLoading, selectedUser } = useChat();
+  const {
+    messages,
+    getMsgs,
+    isMsgsLoading,
+    selectedUser,
+    subscribeToMsgs,
+    unsubscribeToMsgs,
+  } = useChat();
   const { userAuth } = useAuth();
   const { setPreviewImages, setCurrentIndex } = useContext(PreviewContext);
 
@@ -17,7 +23,12 @@ const ChatContainer = ({ setOpenMedia }) => {
 
   useEffect(() => {
     getMsgs(selectedUser?._id);
-  }, [selectedUser?._id, getMsgs]);
+    subscribeToMsgs();
+
+    return () => {
+      unsubscribeToMsgs();
+    };
+  }, [selectedUser?._id, getMsgs, subscribeToMsgs, unsubscribeToMsgs]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
