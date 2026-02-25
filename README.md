@@ -1,18 +1,65 @@
-# React + Vite
+# Bembo Chat App 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small real-time chat application built with **React**. Users can chat
+with each other, see online status, and enjoy a customizable chat
+experience.
 
-Currently, two official plugins are available:
+------------------------------------------------------------------------
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Features
 
-## React Compiler
+-    Real-time messaging between users\
+-    Online / Offline user status\
+-    Typing indicator ("Typing...")\
+-    Multiple chat background themes\
+-    Clean and modern UI
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+------------------------------------------------------------------------
 
-Note: This will impact Vite dev & build performances.
+##  Tech Stack
 
-## Expanding the ESLint configuration
+-    React
+-    Tailwind CSS
+-    DaisyUI
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+------------------------------------------------------------------------
+
+##  Theming
+
+The app uses **DaisyUI** themes, allowing users to:
+
+-   Change chat background
+-   Customize UI appearance
+-   Switch between different styles easily
+
+------------------------------------------------------------------------
+
+
+##  Installation & Setup
+
+``` bash
+# Clone the repository
+git clone https://github.com/your-username/your-repo-name.git
+
+# Navigate to project folder
+cd your-repo-name
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+------------------------------------------------------------------------
+
+##  Environment Variables
+
+Create a `.env` file in the root directory and add:
+
+VITE_API_URL=your_api_url
+VITE_BACKEND_SERVER=your_backend_api
+------------------------------------------------------------------------
+##  Backend
+https://github.com/youssefsalehs/bembo-chat-backend
+
