@@ -46,8 +46,6 @@ export const useChat = create((set, get) => ({
           headers: { "Content-Type": "multipart/form-data" },
         },
       );
-
-      set({ messages: [...messages, res.data.data] });
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -56,14 +54,16 @@ export const useChat = create((set, get) => ({
   },
   subscribeToMsgs: () => {
     const socket = useAuth.getState().socket;
-
+    socket.off("newMessage");
     socket.on("newMessage", (newMessage) => {
-      const { selectedUser, messages } = get();
+      const { selectedUser } = get();
       if (
         newMessage.senderId === selectedUser?._id ||
         newMessage.receiverId === selectedUser?._id
       ) {
-        set({ messages: [...messages, newMessage] });
+        set((state) => ({
+          messages: [...state.messages, newMessage],
+        }));
       }
     });
   },
